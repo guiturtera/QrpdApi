@@ -1,0 +1,28 @@
+mutation CreateEvent {
+  createEvent(eventInput: {
+    title: "Test event 4"
+    description: "Event test for my api"
+    price: 10.2
+    date: "2021-12-30T02:39:35.298Z"
+  }) {
+    _id
+    title
+  }
+}
+
+mutation {
+  createUser(userInput: {
+    email: "rafaturtera@hotmail.com"
+    password: "Turtera97"
+  }) {
+    email
+    password
+  }
+}
+
+query GetEvents{
+  events {
+    _id
+    title
+  }
+}
