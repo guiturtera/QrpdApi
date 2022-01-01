@@ -2,23 +2,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlHTTP } = require('express-graphql');
 
-const userSchema = require('./graphql/schema/user');
+const graphqlSchema = require('./graphql/schema/index');
 
-module.exports = (connect) => {
+module.exports = async () => {
     const app = express();
 
     app.use(bodyParser.json());
 
     app.use(
-        '/user', 
+        '/graphql', 
         graphqlHTTP({
-            schema: userSchema,
+            schema: graphqlSchema,
             //rootValue: graphqlResolvers,
             graphiql: true
     }));
 
     return app.listen(3000, () => {
         console.log('Listening at port 3000');
-        connect();
     });
 }

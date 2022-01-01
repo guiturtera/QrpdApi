@@ -33,6 +33,6 @@ UserTC.addRelation("createdEvents", {
 })*/
 
 UserTC.removeField('password');
-addMongooseAutoCrud(schemaComposer, UserTC);
+addMongooseAutoCrud(schemaComposer, UserTC, 'User', 'Users');
 
 module.exports = schemaComposer.buildSchema();

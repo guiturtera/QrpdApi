@@ -1,25 +1,16 @@
-const addMongooseAutoCrud = (schemaComposer, ModelTC) => {
+const addMongooseAutoCrud = (schemaComposer, ModelTC, singularModelName, pluralModelName) => {
     schemaComposer.Query.addFields({
-        findbyId: ModelTC.mongooseResolvers.findById(),
-        findbyIds: ModelTC.mongooseResolvers.findByIds(),
-        findOne: ModelTC.mongooseResolvers.findOne(),
-        findMany: ModelTC.mongooseResolvers.findMany(),
-        dataLoader: ModelTC.mongooseResolvers.dataLoader(),
-        dataLoaderMany: ModelTC.mongooseResolvers.dataLoaderMany(),
-        count: ModelTC.mongooseResolvers.count(),
-        userConnection: ModelTC.mongooseResolvers.connection(),
-        userPagination: ModelTC.mongooseResolvers.pagination(),
+        [pluralModelName]: ModelTC.mongooseResolvers.findMany(),
+        [`${pluralModelName}Count`]: ModelTC.mongooseResolvers.count(),
       });
       
       schemaComposer.Mutation.addFields({
-        createOne: ModelTC.mongooseResolvers.createOne(),
-        createMany: ModelTC.mongooseResolvers.createMany(),
-        updateById: ModelTC.mongooseResolvers.updateById(),
-        updateOne: ModelTC.mongooseResolvers.updateOne(),
-        updateMany: ModelTC.mongooseResolvers.updateMany(),
-        removeById: ModelTC.mongooseResolvers.removeById(),
-        removeOne: ModelTC.mongooseResolvers.removeOne(),
-        removeMany: ModelTC.mongooseResolvers.removeMany(),
+        [`${singularModelName}Create`]: ModelTC.mongooseResolvers.createOne(),
+        [`${singularModelName}CreateMany`]: ModelTC.mongooseResolvers.createMany(),
+        [`${singularModelName}Update`]: ModelTC.mongooseResolvers.updateById(),
+        [`${singularModelName}UpdateMany`]: ModelTC.mongooseResolvers.updateMany(),
+        [`${singularModelName}Remove`]: ModelTC.mongooseResolvers.removeById(),
+        [`${singularModelName}RemoveMany`]: ModelTC.mongooseResolvers.removeMany(),
       });
 
       return schemaComposer;

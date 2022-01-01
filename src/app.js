@@ -1,4 +1,6 @@
 const { connect } = require('./db/db-handler');
-const startApp = require('./express');
+const startApp = require('./server');
 
-startApp(connect);
+connect()
+    .then(() => startApp())
+    .catch(err => console.log(err));

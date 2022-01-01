@@ -1,4 +1,4 @@
-const startApp = require('../../src/express');
+const startApp = require('../../src/server');
 const supertest = require("supertest");
 const { connect, closeDatabase, clearDatabase } = require('../db-handler')
 
