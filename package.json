@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand ./test",
     "start": "nodemon ./src/app.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +28,8 @@
     "@types/jest": "^27.4.0",
     "body-parser": "^1.19.1",
     "jest": "^27.4.5",
-    "nodemon": "^2.0.15"
+    "mongodb-memory-server": "^8.1.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
   }
 }

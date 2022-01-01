@@ -1,23 +1,4 @@
-const connectToDatabase = require('./db/mongoose')
-const express = require('express');
-const bodyParser = require('body-parser');
-const { graphqlHTTP } = require('express-graphql');
+const { connect } = require('./db/db-handler');
+const startApp = require('./express');
 
-const graphqlSchema = require('./graphql/schema/index');
-
-const app = express();
-
-app.use(bodyParser.json());
-
-app.use(
-    '/graphql', 
-    graphqlHTTP({
-        schema: graphqlSchema,
-        //rootValue: graphqlResolvers,
-        graphiql: true
-}));
-
-app.listen(3000, () => {
-    console.log('Listening at port 3000');
-    connectToDatabase();
-});
+startApp(connect);

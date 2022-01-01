@@ -16,4 +16,4 @@ const connect = () => {
         .catch((err) => console.log(`Connection to database failed: ${err}`))
 }
 
-module.exports = connect;
+module.exports.connect = connect;
