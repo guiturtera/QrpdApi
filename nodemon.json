@@ -2,6 +2,7 @@
     "env": {
         "MONGO_USER": "admin",
         "MONGO_PASSWORD": "admin",
-        "MONGO_DB": "sg_api"
+        "MONGO_DB": "sg_api",
+        "PORT": "3000" 
     }
 }
