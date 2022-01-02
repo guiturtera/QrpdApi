@@ -1,6 +1,6 @@
 const { SchemaComposer } = require('graphql-compose');
 const userSchemaComposer = require('./user');
-const authSchemaComposer = require('./auth')
+const authSchemaComposer = require('./auth');
 
 const schemaComposer = new SchemaComposer();
 

@@ -1,4 +1,4 @@
-const User = require('../../models/user');
+const { User } = require('../../models/user');
 
 module.exports.login = async (source, args) => {
     const user = await
@@ -8,7 +8,8 @@ module.exports.login = async (source, args) => {
         let isMatch = await user.comparePassword(password)
         if (isMatch) {
             return {
-                token: args.loginInput.username
+                token: args.loginInput.username,
+                user: user.getFormattedUser()
             }
         }
     }

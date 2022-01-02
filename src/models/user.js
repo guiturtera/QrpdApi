@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { composeMongoose } = require('graphql-compose-mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -39,4 +40,16 @@ userSchema.methods.comparePassword = async function(inputPassword) {
     return await bcrypt.compare(inputPassword, this.password);
 };
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.methods.getFormattedUser = function() {
+    console.log(this)
+    return this
+};
+
+//getFormattedObject
+const User = mongoose.model('User', userSchema);
+
+const customizationOptions = {};
+const UserTC = composeMongoose(User, customizationOptions); 
+
+module.exports.User = User;
+module.exports.UserTC = UserTC;

@@ -1,4 +1,5 @@
-const { SchemaComposer } = require('graphql-compose');
+const { SchemaComposer, ObjectTypeComposer } = require('graphql-compose');
+const { UserTC } = require('../../models/user');
 const { login } = require('../resolvers/auth');
 
 const schemaComposer = new SchemaComposer();
@@ -10,11 +11,17 @@ const LoginInputTC = schemaComposer.createInputTC(`
     }
 `)
 
-const TokenTC = schemaComposer.createObjectTC(`
-    type Token {
-        token: String!
+const TokenTC = ObjectTypeComposer.create({
+    name: 'Token',
+    fields: {
+        user: {
+            type: UserTC
+        },
+        token: {
+            type: 'String'
+        }
     }
-`)
+  }, schemaComposer);
 
 schemaComposer.Query.addFields({
     login: {
