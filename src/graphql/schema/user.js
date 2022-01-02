@@ -9,6 +9,10 @@ let schemaComposer = new SchemaComposer();
 const customizationOptions = {};
 const UserTC = composeMongoose(User, customizationOptions);
 
+/*schemaComposer.Query.addFields({
+    login: () => "Works"
+})*/
+
 /*
 UserTC.addRelation(
   'createdEvents',
@@ -33,6 +37,6 @@ UserTC.addRelation("createdEvents", {
 })*/
 
 UserTC.removeField('password');
-addMongooseAutoCrud(schemaComposer, UserTC, 'User', 'Users');
+schemaComposer = addMongooseAutoCrud(schemaComposer, UserTC, 'User', 'Users');
 
-module.exports = schemaComposer.buildSchema();
+module.exports = schemaComposer;

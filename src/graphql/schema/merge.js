@@ -1,16 +1,21 @@
-const addMongooseAutoCrud = (schemaComposer, ModelTC, singularModelName, pluralModelName) => {
-    schemaComposer.Query.addFields({
-        [pluralModelName]: ModelTC.mongooseResolvers.findMany(),
-        [`${pluralModelName}Count`]: ModelTC.mongooseResolvers.count(),
+const addMongooseAutoCrud = (schemaComposer, ModelTC, pluralModelName) => {
+    schemaComposer.Query.addNestedFields({
+        [`${pluralModelName}.FindById`]: ModelTC.mongooseResolvers.findById(),
+        [`${pluralModelName}.FindByIds`]: ModelTC.mongooseResolvers.findByIds(),
+        [`${pluralModelName}.FindOne`]: ModelTC.mongooseResolvers.findOne(),
+        [`${pluralModelName}.FindMany`]: ModelTC.mongooseResolvers.findMany(),
+        [`${pluralModelName}.Count`]: ModelTC.mongooseResolvers.count(),
+        [`${pluralModelName}.Connection`]: ModelTC.mongooseResolvers.connection(),
+        [`${pluralModelName}.Pagination`]: ModelTC.mongooseResolvers.pagination(),
       });
       
-      schemaComposer.Mutation.addFields({
-        [`${singularModelName}Create`]: ModelTC.mongooseResolvers.createOne(),
-        [`${singularModelName}CreateMany`]: ModelTC.mongooseResolvers.createMany(),
-        [`${singularModelName}Update`]: ModelTC.mongooseResolvers.updateById(),
-        [`${singularModelName}UpdateMany`]: ModelTC.mongooseResolvers.updateMany(),
-        [`${singularModelName}Remove`]: ModelTC.mongooseResolvers.removeById(),
-        [`${singularModelName}RemoveMany`]: ModelTC.mongooseResolvers.removeMany(),
+      schemaComposer.Mutation.addNestedFields({
+        [`${pluralModelName}.Create`]: ModelTC.mongooseResolvers.createOne(),
+        [`${pluralModelName}.CreateMany`]: ModelTC.mongooseResolvers.createMany(),
+        [`${pluralModelName}.Update`]: ModelTC.mongooseResolvers.updateById(),
+        [`${pluralModelName}.UpdateMany`]: ModelTC.mongooseResolvers.updateMany(),
+        [`${pluralModelName}.Remove`]: ModelTC.mongooseResolvers.removeById(),
+        [`${pluralModelName}.RemoveMany`]: ModelTC.mongooseResolvers.removeMany(),
       });
 
       return schemaComposer;

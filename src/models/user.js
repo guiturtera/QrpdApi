@@ -8,12 +8,13 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        index: true,
+        unique: true
     },
     password: {
         type: String,
-        required: true,
-        select: false
+        required: true
     },
     register: {
         type: String,
@@ -34,11 +35,8 @@ userSchema.pre('save', async function(next) {
     }
 })
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
+userSchema.methods.comparePassword = async function(inputPassword) {
+    return await bcrypt.compare(inputPassword, this.password);
 };
 
 module.exports = mongoose.model('User', userSchema);
