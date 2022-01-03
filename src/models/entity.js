@@ -11,11 +11,7 @@ const entitySchema = new Schema({
         required: true,
         index: true,
         unique: true
-    },
-    fields: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Field',
-    }]
+    }
 })
 
 //entitySchema.plugin(uniqueValidator, { message: 'Error, {PATH} with value = "{VALUE}" already exists.' });

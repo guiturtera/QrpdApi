@@ -1,22 +1,26 @@
 const { EntityTC } = require('../../models/entity');
 const { FieldTC } = require('../../models/field');
 
+const { getFieldsFromEntity } = require('../resolvers/field');
+
 const { SchemaComposer } = require('graphql-compose');
 const { addMongooseAutoCrud } = require('./merge');
 
 let schemaComposer = new SchemaComposer();
 
+schemaComposer = addMongooseAutoCrud(schemaComposer, EntityTC, 'Entities');
+
 EntityTC.addRelation(
     'fields',
     {
-    resolver: () => FieldTC.mongooseResolvers.dataLoaderMany(),
-    prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
-        _ids: (source) => source.fields,
+    resolver: getFieldsFromEntity,
+    prepareArgs: { 
+       entityId: (source) => {
+        return source._id
+    }
     },
-    projection: { fields: 1 }, // point fields in source object, which should be fetched from DB
+    projection: { fields: 1 },
     }
 );
-
-schemaComposer = addMongooseAutoCrud(schemaComposer, EntityTC, 'Entities');
 
 module.exports = schemaComposer.buildSchema();
