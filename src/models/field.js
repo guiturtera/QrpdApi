@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { composeMongoose } = require('graphql-compose-mongoose');
+const { updateEntity } = require('../graphql/resolvers/field')
 
 const Schema = mongoose.Schema;
 
@@ -13,6 +14,8 @@ const fieldSchema = new Schema({
         ref: 'Entity'
     }
 })
+
+fieldSchema.post('save', updateEntity)
 
 const Field = mongoose.model('Field', fieldSchema);
 
