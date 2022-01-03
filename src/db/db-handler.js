@@ -13,7 +13,7 @@ const connect = async () => {
                 {
                     useNewUrlParser: true,
                     useUnifiedTopology: true,
-                    autoIndex: true, 
+                    autoIndex: true 
                 });   
             console.log(`Success connecting to database`);     
         } catch (err) {

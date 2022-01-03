@@ -1,11 +1,10 @@
-const { UserTC } = require('../../models/user');
+const { FieldTC } = require('../../models/field');
 
 const { SchemaComposer } = require('graphql-compose');
 const { addMongooseAutoCrud } = require('./merge');
 
 let schemaComposer = new SchemaComposer();
 
-UserTC.removeField('password');
-schemaComposer = addMongooseAutoCrud(schemaComposer, UserTC, 'Users');
+schemaComposer = addMongooseAutoCrud(schemaComposer, FieldTC, 'Fields');
 
 module.exports = schemaComposer.buildSchema();

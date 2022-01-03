@@ -1,17 +1,10 @@
-const { SchemaComposer } = require('graphql-compose');
-const userSchemaComposer = require('./user');
-const authSchemaComposer = require('./auth');
+const { mergeSchemas } = require('@graphql-tools/schema');
 
-const schemaComposer = new SchemaComposer();
+const userSchema = require('./user');
+const authSchema = require('./auth');
+const entitySchema = require('./entity');
+const fieldSchema = require('./field');
 
-schemaComposer.Query.addFields({
-    ...userSchemaComposer.Query.getFields(), 
-    ...authSchemaComposer.Query.getFields()
-})
-
-schemaComposer.Mutation.addFields({
-    ...userSchemaComposer.Mutation.getFields(), 
-    ...authSchemaComposer.Mutation.getFields()
-})
-
-module.exports = schemaComposer.buildSchema();
+module.exports = mergeSchemas({
+    schemas: [ userSchema, authSchema, entitySchema, fieldSchema ]
+});

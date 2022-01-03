@@ -33,4 +33,4 @@ schemaComposer.Query.addFields({
     }
 });
 
-module.exports = schemaComposer;
+module.exports = schemaComposer.buildSchema();

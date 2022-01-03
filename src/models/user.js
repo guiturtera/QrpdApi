@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { composeMongoose } = require('graphql-compose-mongoose');
-const uniqueValidator = require('mongoose-unique-validator')
+const uniqueValidator = require('mongoose-unique-validator');
 
 const Schema = mongoose.Schema;
 
@@ -26,7 +26,6 @@ const userSchema = new Schema({
 
 userSchema.pre('save', async function(next) {
     var user = this;
-
     if (!user.isModified('password')) return next();
 
     try {
