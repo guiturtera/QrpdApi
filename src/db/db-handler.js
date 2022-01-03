@@ -12,7 +12,8 @@ const connect = async () => {
                 .connect(query, 
                 {
                     useNewUrlParser: true,
-                    useUnifiedTopology: true
+                    useUnifiedTopology: true,
+                    autoIndex: true, 
                 });   
             console.log(`Success connecting to database`);     
         } catch (err) {

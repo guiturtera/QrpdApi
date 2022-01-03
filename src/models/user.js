@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { composeMongoose } = require('graphql-compose-mongoose');
+const uniqueValidator = require('mongoose-unique-validator')
 
 const Schema = mongoose.Schema;
 
@@ -46,6 +47,7 @@ userSchema.methods.getFormattedUser = function() {
 };
 
 //getFormattedObject
+userSchema.plugin(uniqueValidator, { message: 'Error, {PATH} with value = "{VALUE}" already exists.' });
 const User = mongoose.model('User', userSchema);
 
 const customizationOptions = {};
