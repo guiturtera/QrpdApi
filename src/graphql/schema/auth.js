@@ -14,18 +14,32 @@ const LoginInputTC = schemaComposer.createInputTC(`
 const TokenTC = ObjectTypeComposer.create({
     name: 'Token',
     fields: {
+        value: {
+            type: 'String!', 
+            required: true
+        },
+        expiration: {
+            type: 'Int!',
+            required: true
+        }
+    }
+}, schemaComposer)
+
+const AssociativeTokenTC = ObjectTypeComposer.create({
+    name: 'AssociativeToken',
+    fields: {
         user: {
             type: UserTC
         },
         token: {
-            type: 'String'
+            type: TokenTC
         }
     }
   }, schemaComposer);
 
-schemaComposer.Query.addFields({
-    login: {
-        type: TokenTC,
+schemaComposer.Query.addNestedFields({
+    [`Auth.JWT.Login`]: {
+        type: AssociativeTokenTC,
         resolve: login,
         args: {
             loginInput: LoginInputTC

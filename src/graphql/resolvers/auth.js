@@ -8,7 +8,10 @@ module.exports.login = async (source, args) => {
         let isMatch = await user.comparePassword(password)
         if (isMatch) {
             return {
-                token: args.loginInput.username,
+                token: {
+                    value: args.loginInput.username,
+                    expiration: 2
+                },
                 user: user.getFormattedUser()
             }
         }
