@@ -1,19 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlHTTP } = require('express-graphql');
+const mainSchemaPromise = require('./graphql/schema/index');
 
-const graphqlSchema = require('./graphql/schema/index');
+module.exports = async () => {    
+    const graphqlSchema = await mainSchemaPromise();
 
-const app = express();
+    const app = express();
 
-app.use(bodyParser.json());
+    app.use(bodyParser.json());
 
-app.use(
-    '/graphql', 
-    graphqlHTTP({
-        schema: graphqlSchema,
-        //rootValue: graphqlResolvers,
-        graphiql: true
-}));
+    app.use(
+        '/graphql', 
+        graphqlHTTP({
+            schema: graphqlSchema,
+            //rootValue: graphqlResolvers,
+            graphiql: true
+    }));
 
-module.exports = app;
+    return app;
+
+}

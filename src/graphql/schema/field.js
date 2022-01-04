@@ -15,7 +15,6 @@ FieldTC.addRelation(
     resolver: EntityTC.mongooseResolvers.findById(),
     prepareArgs: { 
        _id: (source) => {
-        console.log(source.entity);
         return source.entity;
     }
     },

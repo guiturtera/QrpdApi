@@ -41,7 +41,6 @@ userSchema.methods.comparePassword = async function(inputPassword) {
 };
 
 userSchema.methods.getFormattedUser = function() {
-    console.log(this)
     return this
 };
 

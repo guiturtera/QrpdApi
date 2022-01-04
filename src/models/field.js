@@ -10,7 +10,16 @@ const fieldSchema = new Schema({
     },
     entity: {
         type: Schema.Types.ObjectId,
-        ref: 'Entity'
+        ref: 'Entity',
+        required: true
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: ['String', 'Number', 'Date', 'Boolean']
+    },
+    default: {
+        type: Schema.Types.Mixed
     }
 })
 

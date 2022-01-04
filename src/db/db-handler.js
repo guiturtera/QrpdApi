@@ -6,7 +6,6 @@ const query = `mongodb+srv://${process.env.MONGO_USER}:${
     }?retryWrites=true&w=majority`;
 
 const connect = async () => {
-    
         try {
             await mongoose
                 .connect(query, 
