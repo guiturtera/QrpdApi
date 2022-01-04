@@ -11,7 +11,7 @@ module.exports = CustomModels()
             const customModelTC = Model.CustomModelsTC[i];
             const customModelName = customModel.collection.collectionName;
 
-            schemaComposer = addMongooseAutoCrud(schemaComposer, customModelTC, customModelName);
+            schemaComposer = addMongooseAutoCrud(schemaComposer, customModelTC, `Custom.${customModelName}`);
         }
 
         return schemaComposer.buildSchema();
