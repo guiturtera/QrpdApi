@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-const { composeMongoose } = require('graphql-compose-mongoose');
+import { composeMongoose } from "graphql-compose-mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -25,5 +25,6 @@ const customizationOptions = {
 };
 const EntityTC = composeMongoose(Entity, customizationOptions); 
 
-module.exports.Entity = Entity
-module.exports.EntityTC = EntityTC
+export {
+    Entity, EntityTC   
+}

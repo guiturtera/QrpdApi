@@ -1,6 +1,6 @@
-const { SchemaComposer, ObjectTypeComposer } = require('graphql-compose');
-const { UserTC } = require('../../models/user');
-const { login } = require('../resolvers/auth');
+import { SchemaComposer, ObjectTypeComposer } from "graphql-compose";
+import { UserTC } from "../../models/user.mjs";
+import { login } from "../resolvers/auth.mjs";
 
 const schemaComposer = new SchemaComposer();
 
@@ -35,7 +35,7 @@ const AssociativeTokenTC = ObjectTypeComposer.create({
             type: TokenTC
         }
     }
-  }, schemaComposer);
+}, schemaComposer);
 
 schemaComposer.Query.addNestedFields({
     [`Auth.JWT.Login`]: {
@@ -47,4 +47,4 @@ schemaComposer.Query.addNestedFields({
     }
 });
 
-module.exports = schemaComposer.buildSchema();
+export default schemaComposer.buildSchema();

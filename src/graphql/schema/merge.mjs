@@ -21,4 +21,4 @@ const addMongooseAutoCrud = (schemaComposer, ModelTC, pluralModelName, options) 
       return schemaComposer;
 }
 
-module.exports = { addMongooseAutoCrud };
+export { addMongooseAutoCrud };

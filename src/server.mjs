@@ -1,10 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { graphqlHTTP } = require('express-graphql');
-const mainSchemaPromise = require('./graphql/schema/index');
-const isAuth = require('./middlewares/is-auth');
+import express from "express";
+import bodyParser from "body-parser";
+import { graphqlHTTP } from "express-graphql";
+import mainSchemaPromise from "./graphql/schema/index.mjs";
+import isAuth from "./middlewares/is-auth.mjs";
 
-module.exports = async () => {    
+export default async () => {    
     const graphqlSchema = await mainSchemaPromise();
 
     const app = express();
@@ -22,5 +22,4 @@ module.exports = async () => {
     }));
 
     return app;
-
 }

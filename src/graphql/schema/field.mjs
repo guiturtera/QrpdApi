@@ -1,8 +1,8 @@
-const { FieldTC } = require('../../models/field');
-const { EntityTC } = require('../../models/entity')
+import { FieldTC } from "../../models/field.mjs";
+import { EntityTC } from "../../models/entity.mjs";
 
-const { SchemaComposer } = require('graphql-compose');
-const { addMongooseAutoCrud } = require('./merge');
+import { SchemaComposer } from "graphql-compose";
+import { addMongooseAutoCrud } from "./merge.mjs";
 
 let schemaComposer = new SchemaComposer();
 
@@ -22,4 +22,5 @@ FieldTC.addRelation(
     }
 );
 
-module.exports = schemaComposer.buildSchema();
+
+export default schemaComposer.buildSchema();

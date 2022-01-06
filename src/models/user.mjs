@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const { composeMongoose } = require('graphql-compose-mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import { composeMongoose } from "graphql-compose-mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 const Schema = mongoose.Schema;
 
@@ -51,5 +51,6 @@ const User = mongoose.model('User', userSchema);
 const customizationOptions = {};
 const UserTC = composeMongoose(User, customizationOptions); 
 
-module.exports.User = User;
-module.exports.UserTC = UserTC;
+export {
+    User, UserTC
+}

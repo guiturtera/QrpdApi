@@ -1,7 +1,7 @@
-const { User } = require('../../models/user');
-const jwt = require('jsonwebtoken')
+import { User } from "../../models/user.mjs";
+import jwt from "jsonwebtoken";
 
-module.exports.login = async (source, args) => {
+export async function login (source, args) {
     const user = await
     User.findOne({ username: args.loginInput.username });
     if (user) {

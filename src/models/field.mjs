@@ -1,7 +1,12 @@
-const mongoose = require('mongoose');
-const { composeMongoose } = require('graphql-compose-mongoose');
+import mongoose from "mongoose";
+import { Entity } from "./entity.mjs";
+import { composeMongoose } from "graphql-compose-mongoose";
 
 const Schema = mongoose.Schema;
+
+const entitiesFound = await Entity.find();
+const entitiesNames = entitiesFound.map(ent => ent.name);
+entitiesNames.push('User');
 
 const fieldSchema = new Schema({
     name: {
@@ -16,10 +21,14 @@ const fieldSchema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['String', 'Number', 'Date', 'Boolean']
+        enum: ['String', 'Number', 'Date', 'Boolean', 'ObjectId']
     },
     default: {
-        type: Schema.Types.Mixed
+        type: Schema.Types.Mixed,
+    },
+    ref: {
+        type: String,
+        enum: entitiesNames
     }
 })
 
@@ -31,5 +40,6 @@ const Field = mongoose.model('Field', fieldSchema);
 const customizationOptions = {};
 const FieldTC = composeMongoose(Field, customizationOptions); 
 
-module.exports.Field = Field
-module.exports.FieldTC = FieldTC
+export {
+    Field, FieldTC
+}

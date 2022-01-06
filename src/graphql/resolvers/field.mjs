@@ -1,7 +1,7 @@
-const { Field, FieldTC } = require('../../models/field');
-const { Resolver } = require('graphql-compose');
+import { Field, FieldTC } from "../../models/field.mjs";
+import { Resolver } from "graphql-compose";
 
-module.exports.getFieldsFromEntity = new Resolver({
+export const getFieldsFromEntity = new Resolver({
     name: 'getFieldsFromEntity',
     type: [FieldTC],
     resolve: async (source) => {

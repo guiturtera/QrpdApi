@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const query = `mongodb+srv://${process.env.MONGO_USER}:${
     process.env.MONGO_PASSWORD
@@ -21,4 +21,4 @@ const connect = async () => {
         }
 }
 
-module.exports.connect = connect;
+export { connect };

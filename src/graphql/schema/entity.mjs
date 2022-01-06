@@ -1,10 +1,10 @@
-const { EntityTC } = require('../../models/entity');
-const { FieldTC } = require('../../models/field');
+import { EntityTC } from "../../models/entity.mjs";
+import { FieldTC } from "../../models/field.mjs";
 
-const { getFieldsFromEntity } = require('../resolvers/field');
+import { getFieldsFromEntity } from "../resolvers/field.mjs";
 
-const { SchemaComposer } = require('graphql-compose');
-const { addMongooseAutoCrud } = require('./merge');
+import { SchemaComposer } from "graphql-compose";
+import { addMongooseAutoCrud } from "./merge.mjs";
 
 let schemaComposer = new SchemaComposer();
 
@@ -23,4 +23,5 @@ EntityTC.addRelation(
     }
 );
 
-module.exports = schemaComposer.buildSchema();
+
+export default schemaComposer.buildSchema();
