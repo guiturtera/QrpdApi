@@ -3,6 +3,7 @@
         "MONGO_USER": "admin",
         "MONGO_PASSWORD": "admin",
         "MONGO_DB": "sg_api",
-        "PORT": "3000" 
+        "PORT": "3000", 
+        "JWT_SECRET": "XMAU5AwhFkpyHDSfAPf8mmBYKy6TvVt3"
     }
 }

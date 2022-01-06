@@ -19,7 +19,7 @@ const TokenTC = ObjectTypeComposer.create({
             required: true
         },
         expiration: {
-            type: 'Int!',
+            type: 'String!',
             required: true
         }
     }
