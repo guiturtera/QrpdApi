@@ -5,10 +5,10 @@ import authSchema from "./auth.mjs";
 import entitySchema from "./entity.mjs";
 import fieldSchema from "./field.mjs";
 import customSchema from  './custom.mjs';
-import roleSchema from  './role.mjs';
+import profileSchema from  './profile.mjs';
 
 export default async () => {
     return mergeSchemas({
-        schemas: [ userSchema, authSchema, entitySchema, fieldSchema, customSchema, roleSchema ]
+        schemas: [ userSchema, authSchema, entitySchema, fieldSchema, customSchema, profileSchema ]
     });
 }

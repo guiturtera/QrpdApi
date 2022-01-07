@@ -8,7 +8,7 @@ import { addMongooseAutoCrud } from "./merge.mjs";
 
 let schemaComposer = new SchemaComposer();
 
-schemaComposer = addMongooseAutoCrud(schemaComposer, EntityTC, 'Entities');
+schemaComposer = addMongooseAutoCrud(schemaComposer, EntityTC, 'Entity');
 
 EntityTC.addRelation(
     'fields',

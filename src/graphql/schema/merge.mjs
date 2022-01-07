@@ -1,21 +1,43 @@
-const addMongooseAutoCrud = (schemaComposer, ModelTC, pluralModelName, options) => {
+import { authWrapper } from "../resolvers/auth.mjs"
+
+const addMongooseAutoCrud = (schemaComposer, ModelTC, pluralModelName) => {
+    const modelName = ModelTC.getTypeName()
     schemaComposer.Query.addNestedFields({
-        //[`${pluralModelName}.FindById`]: ModelTC.mongooseResolvers.findById({ disableErrorField: true }),
-        //[`${pluralModelName}.FindByIds`]: ModelTC.mongooseResolvers.findByIds({ disableErrorField: true }),
-        //[`${pluralModelName}.FindOne`]: ModelTC.mongooseResolvers.findOne({ disableErrorField: true }),
-        [`${pluralModelName}.Find`]: ModelTC.mongooseResolvers.findMany({ disableErrorField: true }),
-        [`${pluralModelName}.Count`]: ModelTC.mongooseResolvers.count({ disableErrorField: true }),
-        [`${pluralModelName}.Connection`]: ModelTC.mongooseResolvers.connection({ disableErrorField: true }),
-        [`${pluralModelName}.Pagination`]: ModelTC.mongooseResolvers.pagination({ disableErrorField: true }),
+        ...authWrapper({
+          [`${pluralModelName}.Find`]: {
+            resolver: ModelTC.mongooseResolvers.findMany({ disableErrorField: true }),
+            role: "read"
+          },
+          [`${pluralModelName}.Count`]: {
+            resolver: ModelTC.mongooseResolvers.count({ disableErrorField: true }),
+            role: "read"
+          },
+          [`${pluralModelName}.Connection`]: {
+            resolver: ModelTC.mongooseResolvers.connection({ disableErrorField: true }),
+            role: "read"
+          },
+          [`${pluralModelName}.Pagination`]: {
+            resolver: ModelTC.mongooseResolvers.pagination({ disableErrorField: true }),
+            role: "read"
+          },
+        }, modelName)
       });
       
       schemaComposer.Mutation.addNestedFields({
-        [`${pluralModelName}.Create`]: ModelTC.mongooseResolvers.createOne({ disableErrorField: true }),
-        //[`${pluralModelName}.CreateMany`]: ModelTC.mongooseResolvers.createMany({ disableErrorField: true }),
-        [`${pluralModelName}.Update`]: ModelTC.mongooseResolvers.updateById({ disableErrorField: true }),
-        //[`${pluralModelName}.UpdateMany`]: ModelTC.mongooseResolvers.updateMany({ disableErrorField: true }),
-        [`${pluralModelName}.Remove`]: ModelTC.mongooseResolvers.removeById({ disableErrorField: true }),
-        //[`${pluralModelName}.RemoveMany`]: ModelTC.mongooseResolvers.removeMany({ disableErrorField: true }),
+        ...authWrapper({
+          [`${pluralModelName}.Create`]: {
+            resolver: ModelTC.mongooseResolvers.createOne({ disableErrorField: true }),
+            role: 'create'
+          },
+          [`${pluralModelName}.Update`]: {
+            resolver: ModelTC.mongooseResolvers.updateById({ disableErrorField: true }),
+            role: 'update'
+          },
+          [`${pluralModelName}.Delete`]: {
+            resolver: ModelTC.mongooseResolvers.removeById({ disableErrorField: true }),
+            role: 'delete'
+          },
+        }, modelName)
       });
 
       return schemaComposer;

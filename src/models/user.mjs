@@ -21,6 +21,10 @@ const userSchema = new Schema({
     register: {
         type: String,
         required: true
+    },
+    profile: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Profile'
     }
 });
 
@@ -50,7 +54,6 @@ const User = mongoose.model('User', userSchema);
 
 const customizationOptions = {};
 const UserTC = composeMongoose(User, customizationOptions); 
-
 export {
     User, UserTC
 }

@@ -6,7 +6,7 @@ import { addMongooseAutoCrud } from "./merge.mjs";
 
 let schemaComposer = new SchemaComposer();
 
-schemaComposer = addMongooseAutoCrud(schemaComposer, FieldTC, 'Fields');
+schemaComposer = addMongooseAutoCrud(schemaComposer, FieldTC, 'Field');
 //const aux = schemaComposer.getResolveMethods().MutationFields
 
 FieldTC.addRelation(
