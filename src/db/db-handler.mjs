@@ -7,6 +7,7 @@ const query = `mongodb+srv://${process.env.MONGO_USER}:${
 
 const connect = async () => {
         try {
+            mongoose.pluralize(null);
             await mongoose
                 .connect(query, 
                 {
