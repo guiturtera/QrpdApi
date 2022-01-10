@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { timestampFields } from "../helpers/graphql.mjs"
 import { Entity } from "./entity.mjs";
 import { composeMongoose } from "graphql-compose-mongoose";
 
@@ -30,14 +31,20 @@ const fieldSchema = new Schema({
         type: String,
         enum: entitiesNames
     }
-})
+}, { timestamps: true })
 
 //const { updateEntity } = require('../graphql/resolvers/field')
 //fieldSchema.post('save', updateEntity)
 
 const Field = mongoose.model('Field', fieldSchema);
 
-const customizationOptions = {};
+const customizationOptions = {
+    inputType: {
+        removeFields: [
+            ...timestampFields
+        ]
+    }
+};
 const FieldTC = composeMongoose(Field, customizationOptions); 
 
 export {

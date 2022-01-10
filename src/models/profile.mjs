@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { composeMongoose } from "graphql-compose-mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 import { Entity } from './entity.mjs'
+import { timestampFields } from "../helpers/graphql.mjs"
 
 const Schema = mongoose.Schema;
 
@@ -72,7 +73,7 @@ const roleProfileSchema = new Schema({
     roles: {
         type: roleSchema
     }
-});
+}, { timestamps: true });
 
 
 roleProfileSchema.plugin(uniqueValidator, { message: 'Error, {PATH} with value = "{VALUE}" already exists.' });
@@ -80,7 +81,13 @@ roleProfileSchema.plugin(uniqueValidator, { message: 'Error, {PATH} with value =
 const Profile = mongoose.model('Profile', roleProfileSchema, 'Profile');
 
 
-const customizationOptions = {};
+const customizationOptions = {
+    inputType: {
+        removeFields: [
+            ...timestampFields
+        ]
+    }
+};
 const ProfileTC = composeMongoose(Profile, customizationOptions); 
 
 export {

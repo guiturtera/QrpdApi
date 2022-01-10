@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { composeMongoose } from "graphql-compose-mongoose";
 import uniqueValidator from "mongoose-unique-validator";
+import { timestampFields } from "../helpers/graphql.mjs"
 
 const Schema = mongoose.Schema;
 
@@ -26,7 +27,7 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Profile'
     }
-});
+}, { timestamps: true });
 
 userSchema.pre('save', async function(next) {
     var user = this;
@@ -52,7 +53,13 @@ userSchema.methods.getFormattedUser = function() {
 userSchema.plugin(uniqueValidator, { message: 'Error, {PATH} with value = "{VALUE}" already exists.' });
 const User = mongoose.model('User', userSchema);
 
-const customizationOptions = {};
+const customizationOptions = {
+    inputType: {
+        removeFields: [
+            ...timestampFields
+        ]
+    }
+};
 const UserTC = composeMongoose(User, customizationOptions); 
 export {
     User, UserTC
