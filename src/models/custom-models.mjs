@@ -15,35 +15,38 @@ for (let i = 0; i < entities.length; i++) {
     const entity = entities[i];
     const fields = await Field.find({ entity: entity._id })
     
-    if (fields.length > 0) {
-        let auxSchema = new Schema({}, { timestamps: true });
-        fields.forEach(field => {
-            const fieldObj = field._doc;
-            let fieldConfig = {
-                type: fieldObj.type,
-                //default: fieldObj.default,
-            }
-            if (fieldObj.type == "ObjectId") {
-                fieldConfig = { ...fieldConfig, ref: fieldObj.type }
-            }
-            auxSchema.add({
-                [fieldObj.name]: fieldConfig
-            })
+    let auxSchema = new Schema({
+        SearchIndex: {
+            type: String,
+            index: true
+        }
+    }, { timestamps: true });
+    fields.forEach(field => {
+        const fieldObj = field._doc;
+        let fieldConfig = {
+            type: fieldObj.type,
+            //default: fieldObj.default,
+        }
+        if (fieldObj.type == "ObjectId") {
+            fieldConfig = { ...fieldConfig, ref: fieldObj.type }
+        }
+        auxSchema.add({
+            [fieldObj.name]: fieldConfig
         })
-        
-        let createdModel = model(entity._doc.name, auxSchema);
-        const customizationOptions = {
-            inputType: {
-                removeFields: [
-                    ...timestampFields
-                ]
-            }
-        };
-        const createdModelTC = composeMongoose(createdModel, customizationOptions);
+    })
+    
+    let createdModel = model(entity._doc.name, auxSchema);
+    const customizationOptions = {
+        inputType: {
+            removeFields: [
+                ...timestampFields
+            ]
+        }
+    };
+    const createdModelTC = composeMongoose(createdModel, customizationOptions);
 
-        CustomModels.push(createdModel);
-        CustomModelsTC.push(createdModelTC);
-    }
+    CustomModels.push(createdModel);
+    CustomModelsTC.push(createdModelTC);
 }
 
 export {

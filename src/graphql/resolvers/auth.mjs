@@ -31,6 +31,9 @@ const authWrapper = (resolversConfig, modelName) => {
     let resolvers = {};
     Object.keys(resolversConfig).forEach((k) => {
       resolvers[k] = resolversConfig[k].resolver.wrapResolve(next => async rp => {
+          if (resolversConfig[k].role === "any"){
+            return next(rp)
+          }
           if (!rp.context.isAuth) {
             throw new Error('You must login to view this.');
           }
