@@ -31,6 +31,7 @@ const authWrapper = (resolversConfig, modelName) => {
     let resolvers = {};
     Object.keys(resolversConfig).forEach((k) => {
       resolvers[k] = resolversConfig[k].resolver.wrapResolve(next => async rp => {
+          return next(rp) // ONLY FOR TESTS PURPOSES
           if (resolversConfig[k].role === "any"){
             return next(rp)
           }

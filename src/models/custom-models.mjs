@@ -28,7 +28,7 @@ for (let i = 0; i < entities.length; i++) {
             //default: fieldObj.default,
         }
         if (fieldObj.type == "ObjectId") {
-            fieldConfig = { ...fieldConfig, ref: fieldObj.type }
+            fieldConfig = { ...fieldConfig, type: [Schema.Types.ObjectId], ref: fieldObj.type }
         }
         auxSchema.add({
             [fieldObj.name]: fieldConfig
