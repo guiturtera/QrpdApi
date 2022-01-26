@@ -5,7 +5,7 @@ import { authWrapper } from "../resolvers/auth.mjs";
 import { findBySearchIndex } from "../resolvers/custom.mjs";
 import { Entity } from "../../models/entity.mjs";
 import { Field } from "../../models/field.mjs";
-import { getExpanderGenericRelationship } from "../resolvers/merge.mjs"
+import { getExpanderArrayRelationship, getExpanderSingleRelationship } from "../resolvers/merge.mjs"
 
 let schemaComposer = new SchemaComposer();
 
@@ -28,28 +28,33 @@ for (let i = 0; i < CustomModels.length; i++) {
     modelsTCCreated[customModelName] = { customModelTC, customModel }
 }
 
-for (const [customModelName, { customModelTC, customModel }] of Object.entries(modelsTCCreated)) {
-    let entity = await Entity.findOne({ name: customModelName })
-    let fields = await Field.find({ entity: entity, type: "ObjectId" })
+const fillCustomRelationship = async (resolverGetter, filter) => {
+    for (const [customModelName, { customModelTC, customModel }] of Object.entries(modelsTCCreated)) {
+        let entity = await Entity.findOne({ name: customModelName })
+        let fields = await Field.find({ entity: entity, type: filter })
     
-    for (let j = 0; j < fields.length; j++) {
-        let field = fields[j]
-        let relatedModel = modelsTCCreated[field.ref].customModel
-        let relatedModelTC = modelsTCCreated[field.ref].customModelTC
-
-        customModelTC.addRelation(
-            field.name,
-            {
-                resolver: getExpanderGenericRelationship(relatedModel, relatedModelTC, schemaComposer),
-                prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
-                  content: async (source) => {
-                      let customModelData = await customModel.findById(source._id)
-                      return customModelData._doc[field.name]
-                  },
-                },
-            }
-        ); 
+        for (let j = 0; j < fields.length; j++) {
+            let field = fields[j]
+            let relatedModel = modelsTCCreated[field.ref].customModel
+            let relatedModelTC = modelsTCCreated[field.ref].customModelTC
+    
+            customModelTC.addRelation(
+                field.name,
+                {
+                    resolver: resolverGetter(relatedModel, relatedModelTC, schemaComposer),
+                    prepareArgs: {
+                      content: async (source) => {
+                          let customModelData = await customModel.findById(source._id)
+                          return customModelData._doc[field.name]
+                      },
+                    },
+                }
+            ); 
+        }
     }
 }
+
+await fillCustomRelationship(getExpanderArrayRelationship, "[ObjectId]")
+await fillCustomRelationship(getExpanderSingleRelationship, "ObjectId")
 
 export default schemaComposer.buildSchema();

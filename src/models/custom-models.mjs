@@ -27,8 +27,13 @@ for (let i = 0; i < entities.length; i++) {
             type: fieldObj.type,
             //default: fieldObj.default,
         }
-        if (fieldObj.type == "ObjectId") {
-            fieldConfig = { ...fieldConfig, type: [Schema.Types.ObjectId], ref: fieldObj.type }
+        if (fieldObj.type.includes("ObjectId")) {
+            if (fieldObj.type == "[ObjectId]"){
+                fieldConfig = { ...fieldConfig, type: [Schema.Types.ObjectId], ref: fieldObj.ref }
+            }
+            else {
+                fieldConfig = { ...fieldConfig, type: Schema.Types.ObjectId, ref: fieldObj.ref }
+            }
         }
         auxSchema.add({
             [fieldObj.name]: fieldConfig

@@ -1,6 +1,6 @@
 import { Resolver } from "graphql-compose";
 
-export const getExpanderGenericRelationship = (modelRelated, modelTCRelated, schemaComposer) => {
+export const getExpanderArrayRelationship = (modelRelated, modelTCRelated, schemaComposer) => {
     
     return new Resolver({
         name: `expandGenericRelationship${modelRelated.collection.collectionName}`,
@@ -12,8 +12,20 @@ export const getExpanderGenericRelationship = (modelRelated, modelTCRelated, sch
             let res = await modelRelated.findById(ids[i]);
             customObjects.push(res);
           }
-          console.log(customObjects)
           return customObjects
         },
       }, schemaComposer);
+}
+
+export const getExpanderSingleRelationship = (modelRelated, modelTCRelated, schemaComposer) => {
+  return new Resolver({
+      name: `expandGenericRelationship${modelRelated.collection.collectionName}`,
+      type: modelTCRelated,
+      resolve: async (source) => {
+        let id = await source.args.content
+        if (id) {
+          return await modelRelated.findById(id);
+        }
+      },
+    }, schemaComposer);
 }

@@ -22,7 +22,7 @@ const fieldSchema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['String', 'Number', 'Date', 'Boolean', 'ObjectId']
+        enum: ['String', 'Number', 'Date', 'Boolean', 'ObjectId', '[ObjectId]']
     },
     default: {
         type: Schema.Types.Mixed,
