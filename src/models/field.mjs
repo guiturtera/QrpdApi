@@ -26,6 +26,16 @@ const fieldSchema = new Schema({
     },
     default: {
         type: Schema.Types.Mixed,
+        validate: {
+            validator: function(v) {
+                if (typeof v === this.type.toLowerCase()){
+                    return true
+                }
+                return false;
+            },
+            message: props => `Default value must be compatible to the choosen type!
+For now, default property is only available for 'String', 'Number', and 'Boolean'`
+        }
     },
     ref: {
         type: String,
