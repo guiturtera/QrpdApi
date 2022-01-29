@@ -7,11 +7,21 @@ import { composeMongoose } from "graphql-compose-mongoose";
 const Schema = mongoose.Schema;
 
 const entitySchema = new Schema({
+    displayName: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true,
         index: true,
-        unique: true
+        unique: true,
+        validate: {
+            validator: function(v) {
+                return /^[A-Za-z]{4,}$/.test(v);
+            },
+            message: props => `The value '${props.value}' is invalid! The name field must only have simple chars and higher than 4. Regex = '^[A-Za-z]{4,}$'`
+        }
     }
 }, { timestamps: true })
 
