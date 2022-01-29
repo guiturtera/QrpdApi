@@ -17,8 +17,8 @@ const entitySchema = new Schema({
         index: true,
         unique: true,
         validate: {
-            validator: function(v) {
-                return /^[A-Za-z]{4,}$/.test(v);
+            validator: function(val) {
+                return /^[A-Za-z]{4,}$/.test(val);
             },
             message: props => `The value '${props.value}' is invalid! The name field must only have simple chars and higher than 4. Regex = '^[A-Za-z]{4,}$'`
         }
