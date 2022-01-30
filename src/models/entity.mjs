@@ -26,7 +26,7 @@ const entitySchema = new Schema({
 }, { timestamps: true })
 
 entitySchema.plugin(uniqueValidator, { message: 'Error, {PATH} with value = "{VALUE}" already exists.' });
-const Entity = mongoose.model('Entity', entitySchema);
+const Entity = mongoose.model('Entity', entitySchema, 'Entity');
 
 const customizationOptions = {
     inputType: {

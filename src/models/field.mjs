@@ -28,9 +28,9 @@ const fieldSchema = new Schema({
                 },
                 {
                     validator: function(val) {
-                        return /^[A-Za-z]{4,}$/.test(val);
+                        return /^[A-Za-z]{1,}$/.test(val);
                     },
-                    message: props => `The value '${props.value}' is invalid! The name field must only have simple chars and higher than 4. Regex = '^[A-Za-z]{4,}$'`
+                    message: props => `The value '${props.value}' is invalid! The name field must only have simple chars and higher than 1. Regex = '^[A-Za-z]{1,}$'`
                 }
             ]
         
@@ -57,6 +57,10 @@ const fieldSchema = new Schema({
             message: props => `Default value must be compatible to the choosen type!
 For now, default property is only available for 'String', 'Number', and 'Boolean'`
         }
+    },
+    required: {
+        type: Boolean,
+        default: false
     },
     ref: {
         type: String,

@@ -6,20 +6,20 @@ const query = `mongodb+srv://${process.env.MONGO_USER}:${
     }?retryWrites=true&w=majority`;
 
 const connect = async () => {
-        try {
-            mongoose.pluralize(null);
-            await mongoose
-                .connect(query, 
-                {
-                    useNewUrlParser: true,
-                    useUnifiedTopology: true,
-                    autoIndex: true 
-                });   
-            console.log(`Success connecting to database`);     
-        } catch (err) {
-            console.log(`Connection to database failed: ${err}`);
-            throw err;
-        }
+    try {
+        mongoose.pluralize(null);
+        await mongoose
+            .connect(query, 
+            {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                autoIndex: true 
+            });   
+        console.log(`Success connecting to database`);     
+    } catch (err) {
+        console.log(`Connection to database failed: ${err}`);
+        throw err;
+    }
 }
 
 export { connect };
