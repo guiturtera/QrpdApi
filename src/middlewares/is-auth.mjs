@@ -1,5 +1,4 @@
 import { isValidToken } from "../helpers/auth.mjs";
-import jwt from "jsonwebtoken";
 
 export default (req, res, next) => {
     const authHeader = req.get('Authorization');
