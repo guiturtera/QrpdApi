@@ -35,7 +35,7 @@ for (let i = 0; i < entities.length; i++) {
                 fieldConfig = { ...fieldConfig, type: Schema.Types.ObjectId, ref: fieldObj.ref }
             }
         }
-        console.log(fieldObj);
+        //console.log(fieldObj);
         auxSchema.add({
             [fieldObj.name]: fieldConfig
         })

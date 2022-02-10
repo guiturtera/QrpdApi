@@ -1,6 +1,6 @@
 import { SchemaComposer, ObjectTypeComposer } from "graphql-compose";
 import { UserTC } from "../../models/user.mjs";
-import { login } from "../resolvers/auth.mjs";
+import { login, isValid } from "../resolvers/auth.mjs";
 
 const schemaComposer = new SchemaComposer();
 
@@ -37,6 +37,15 @@ const AssociativeTokenTC = ObjectTypeComposer.create({
     }
 }, schemaComposer);
 
+const IsValidTokenTC = ObjectTypeComposer.create({
+    name: 'IsValidToken',
+    fields: {
+        valid: {
+            type: "Boolean"
+        }
+    }
+}, schemaComposer);
+
 schemaComposer.Query.addNestedFields({
     [`Auth.JWT.Login`]: {
         type: AssociativeTokenTC,
@@ -44,6 +53,10 @@ schemaComposer.Query.addNestedFields({
         args: {
             loginInput: LoginInputTC
         }
+    },
+    [`Auth.JWT.IsValid`]: {
+        type: IsValidTokenTC,
+        resolve: isValid
     }
 });
 

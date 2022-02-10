@@ -1,3 +1,4 @@
+import { isValidToken } from "../helpers/auth.mjs";
 import jwt from "jsonwebtoken";
 
 export default (req, res, next) => {
@@ -6,27 +7,13 @@ export default (req, res, next) => {
         req.isAuth = false;
         return next();
     }
+    const { valid, decodedToken } = isValidToken(authHeader)
 
-    const token = authHeader.split(' ')[1]; // Bearer token
-    if (!token || token === '') {
+    if (!req.isAuth) {
         req.isAuth = false
-        return next();
+        return next()
     }
 
-    let decodedToken;
-    try {
-        decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (err) {
-        req.isAuth = false;
-        return next();
-    }
-
-    if (!decodedToken) {
-        req.isAuth = false;
-        return next();
-    }
-
-    req.isAuth = true;
     req.userId = decodedToken.userId;
     req.roles = decodedToken.roles;
     req.username = decodedToken.username;

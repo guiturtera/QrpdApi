@@ -1,6 +1,8 @@
 import { User } from "../../models/user.mjs";
 import { Profile } from "../../models/profile.mjs";
+import { isValidToken } from "../../helpers/auth.mjs"
 import jwt from "jsonwebtoken";
+
 
 const login = async (source, args) => {
     const user = await
@@ -27,11 +29,22 @@ const login = async (source, args) => {
     throw new Error("Incorrect username/password");
 }
 
+const isValid = async (source, args, context) => {
+  let authString = context.headers.authorization
+  if (!authString) {
+    return { valid: false }
+  }
+  const { valid } = isValidToken(authString)
+
+  return { valid }
+}
+
+
 const authWrapper = (resolversConfig, modelName) => {
     let resolvers = {};
     Object.keys(resolversConfig).forEach((k) => {
       resolvers[k] = resolversConfig[k].resolver.wrapResolve(next => async rp => {
-          return next(rp) // ONLY FOR TESTS PURPOSES
+          //return next(rp) // ONLY FOR TESTS PURPOSES
           if (resolversConfig[k].role === "any"){
             return next(rp)
           }
@@ -44,7 +57,7 @@ const authWrapper = (resolversConfig, modelName) => {
           } catch {
             throw new Error('Error finding role configuration');
           }
-          console.log(rp.context.roles)
+          //console.log(rp.context.roles)
           if (!userHasAccess) {
             throw new Error('Access denied.');
           }
@@ -55,7 +68,6 @@ const authWrapper = (resolversConfig, modelName) => {
     return resolvers
   }
 
-
 export {
-    login, authWrapper
+    login, isValid, authWrapper
 }
