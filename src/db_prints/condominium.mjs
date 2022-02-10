@@ -1,5 +1,7 @@
 import { connect } from "../db/db-handler.mjs";
 import { Entity } from "../models/entity.mjs";
+//import { User } from "../models/user.mjs";
+//import { Profile } from "../models/profile.mjs";
 
 await connect()
 
@@ -61,6 +63,28 @@ try {
 
     // Responsability Terms Fields
     console.log("Responsability Terms - OK")
+
+    // Initial Role
+    console.log("\r\n## Creating initial Role ##")
+    let { Profile } = (await import('../models/profile.mjs'))
+    await Profile.deleteMany()
+    console.log("Profile collection dropped")
+    let allAdminRole = { create: true, read: true, update: true, delete: true }
+    let adminProfile = await Profile.create({ name: "Administrator", roles: { User: allAdminRole, Profile: allAdminRole, Entity: allAdminRole, Field: allAdminRole, 
+        Morador: allAdminRole, Administrador: allAdminRole, PrestadorServico: allAdminRole, Visitante: allAdminRole, Veiculo: allAdminRole,
+        TermoResponsabilidade: allAdminRole } })
+    
+    console.log("Default profile created")
+
+
+    // Initial User
+    console.log("\r\n## Creating initial User ##")
+    let { User } = (await import('../models/user.mjs'))
+    await User.deleteMany()
+    console.log("User collection dropped")
+    await User.create({ username: "admin", password: "admin", register: "0", profile: adminProfile._id })
+    console.log("Default user created")
+
 
 } catch (ex){
     console.log(ex)
